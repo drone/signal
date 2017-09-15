@@ -5,6 +5,7 @@ import (
 	"context"
 	"os"
 	"os/signal"
+	"syscall"
 )
 
 // WithContext returns a copy of parent context whose Done channel is closed
@@ -22,7 +23,7 @@ func WithContextFunc(ctx context.Context, f func()) context.Context {
 	ctx, cancel := context.WithCancel(ctx)
 	go func() {
 		c := make(chan os.Signal)
-		signal.Notify(c, os.Interrupt)
+		signal.Notify(c, syscall.SIGINT, syscall.SIGTERM)
 		defer signal.Stop(c)
 
 		select {
