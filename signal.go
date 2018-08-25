@@ -12,7 +12,7 @@ import (
 // when an os interrupt signal is received.
 func WithContext(ctx context.Context) context.Context {
 	return WithContextFunc(ctx, func() {
-		println("ctrl+c received, terminating process")
+		println("interrupt received, terminating process")
 	})
 }
 
